@@ -21,18 +21,17 @@
 import QtQuick 2.2
 import org.kde.plasma.core 2.0 as PlasmaCore
 
-Item {
+MouseArea {
     id: panelIconWidget;
+    anchors.fill: parent;
+    onClicked: plasmoid.expanded = !plasmoid.expanded;
 
     PlasmaCore.IconItem {
         id: bluetoothIcon;
         source: "preferences-system-bluetooth";
         enabled: btManager.bluetoothOperational;
-        anchors.fill: parent;
-    }
-
-    MouseArea {
-        anchors.fill: parent;
-        onClicked: plasmoid.expanded = !plasmoid.expanded;
+        anchors.centerIn: parent;
+        width: units.roundToIconSize(Math.min(parent.width, parent.height))
+        height: width
     }
 }
