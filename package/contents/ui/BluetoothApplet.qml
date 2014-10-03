@@ -34,7 +34,6 @@ Item {
 
     Plasmoid.toolTipMainText: "Bluetooth";
     Plasmoid.icon: "preferences-system-bluetooth";
-    //Plasmoid.status: btManager.bluetoothOperational ? PlasmaCore.Types.ActiveStatus : PlasmaCore.Types.PassiveStatus;
 
     Plasmoid.switchWidth: units.gridUnit * 10;
     Plasmoid.switchHeight: units.gridUnit * 10;
