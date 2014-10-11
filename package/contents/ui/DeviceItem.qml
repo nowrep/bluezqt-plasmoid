@@ -108,8 +108,9 @@ PlasmaComponents.ListItem {
                 verticalCenter: deviceIcon.verticalCenter;
             }
 
-            PlasmaComponents.Button {
+            PlasmaComponents.ToolButton {
                 id: sendFileButton;
+                flat: false;
                 tooltip: "Send File";
                 iconSource: "edit-copy";
                 visible: Uuids.indexOf(Logic.SendFileService) != -1;
@@ -118,8 +119,9 @@ PlasmaComponents.ListItem {
                 }
             }
 
-            PlasmaComponents.Button {
+            PlasmaComponents.ToolButton {
                 id: browseFilesButton;
+                flat: false;
                 tooltip: "Browse Files";
                 iconSource: "edit-find";
                 visible: Uuids.indexOf(Logic.BrowseFilesService) != -1;
