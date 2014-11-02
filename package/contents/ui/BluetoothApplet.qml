@@ -32,7 +32,7 @@ Item {
 
     property bool showSections : Plasmoid.configuration.showSections;
 
-    Plasmoid.toolTipMainText: "Bluetooth";
+    Plasmoid.toolTipMainText: i18n("Bluetooth");
     Plasmoid.icon: "preferences-system-bluetooth";
 
     Plasmoid.switchWidth: units.gridUnit * 10;

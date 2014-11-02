@@ -111,7 +111,7 @@ PlasmaComponents.ListItem {
             PlasmaComponents.ToolButton {
                 id: sendFileButton;
                 flat: false;
-                tooltip: "Send File";
+                tooltip: i18n("Send File");
                 iconSource: "edit-copy";
                 visible: Uuids.indexOf(Logic.SendFileService) != -1;
                 onClicked: {
@@ -122,7 +122,7 @@ PlasmaComponents.ListItem {
             PlasmaComponents.ToolButton {
                 id: browseFilesButton;
                 flat: false;
-                tooltip: "Browse Files";
+                tooltip: i18n("Browse Files");
                 iconSource: "edit-find";
                 visible: Uuids.indexOf(Logic.BrowseFilesService) != -1;
                 onClicked: {
