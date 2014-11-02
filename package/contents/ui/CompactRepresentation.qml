@@ -36,9 +36,9 @@ MouseArea {
         height: width
 
         PlasmaComponents.BusyIndicator {
-            id: connectingIndicator;
+            id: busyIndicator;
             anchors.fill: parent;
-            running: connectInProgress;
+            running: runningActions > 0;
             visible: running;
         }
     }

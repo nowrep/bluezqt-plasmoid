@@ -28,10 +28,11 @@ import "plasmapackage:/code/logic.js" as Logic
 PlasmaComponents.ListItem {
     id: deviceItem;
 
-    property bool expanded: visibleDetails;
-    property bool visibleDetails: false;
-    property int baseHeight: deviceItemBase.height;
-    property variant currentDeviceDetails: [];
+    property bool expanded : visibleDetails;
+    property bool visibleDetails : false;
+    property bool connecting : false;
+    property int baseHeight : deviceItemBase.height;
+    property variant currentDeviceDetails : [];
 
     height: expanded ? baseHeight + expandableComponentLoader.height + Math.round(units.gridUnit / 3) : baseHeight;
     checked: ListView.isCurrentItem;
@@ -95,6 +96,21 @@ PlasmaComponents.ListItem {
             text: Address;
         }
 
+        PlasmaComponents.BusyIndicator {
+            id: connectingIndicator;
+
+            anchors {
+                right: connectButton.visible ? connectButton.left : parent.right;
+                rightMargin: Math.round(units.gridUnit / 2);
+                verticalCenter: deviceIcon.verticalCenter;
+            }
+
+            height: units.iconSizes.medium;
+            width: height;
+            running: connecting;
+            visible: running && !connectButton.visible;
+        }
+
         Row {
             id: deviceActionsRect;
             spacing: 2;
@@ -137,17 +153,22 @@ PlasmaComponents.ListItem {
                 tooltip: Connected ? i18n("Disconnect") : i18n("Connect");
                 iconSource: Connected ? "network-disconnect" : "network-connect";
                 onClicked: {
-                    if (connectInProgress) {
+                    if (connecting) {
                         return;
                     }
-                    connectInProgress = true;
+
+                    connecting = true;
+                    runningActions++;
+
                     if (Connected) {
                         Device.disconnectDevice().finished.connect(function(call) {
-                            connectInProgress = false;
+                            connecting = false;
+                            runningActions--;
                         });
                     } else {
                         Device.connectDevice().finished.connect(function(call) {
-                            connectInProgress = false;
+                            connecting = false;
+                            runningActions--;
                         });
                     }
                 }
