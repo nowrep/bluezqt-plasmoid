@@ -36,4 +36,4 @@ public Q_SLOTS:
     bool runUrl(const QString &url, const QString &mimeType);
 };
 
-#endif
+#endif // LAUNCHAPP_H

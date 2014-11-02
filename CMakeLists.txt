@@ -17,7 +17,8 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
 find_package(KF5 REQUIRED
     KIO
     I18n
-    Plasma)
+    Plasma
+    QBluez)
 
 add_subdirectory(plugin)
 plasma_install_package(package org.kde.plasma.bluetooth)

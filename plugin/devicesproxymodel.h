@@ -18,16 +18,26 @@
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "bluetoothplugin.h"
-#include "devicesproxymodel.h"
-#include "launchapp.h"
+#ifndef DEVICESPROXYMODEL_H
+#define DEVICESPROXYMODEL_H
 
-#include <QtQml>
+#include <QBluez/DevicesModel>
+#include <QSortFilterProxyModel>
 
-void BluetoothPlugin::registerTypes(const char *uri)
+class DevicesProxyModel : public QSortFilterProxyModel
 {
-    Q_ASSERT(uri == QLatin1String("org.kde.plasma.private.bluetooth"));
+    Q_OBJECT
 
-    qmlRegisterType<LaunchApp>(uri, 1, 0, "LaunchApp");
-    qmlRegisterType<DevicesProxyModel>(uri, 1, 0, "DevicesProxyModel");
-}
+public:
+    enum AdditionalRoles {
+        SectionRole = QBluez::DevicesModel::LastRole + 10
+    };
+
+    DevicesProxyModel(QObject *parent = 0);
+
+    QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
+    QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
+    bool lessThan(const QModelIndex &left, const QModelIndex &right) const Q_DECL_OVERRIDE;
+};
+
+#endif // DEVICESPROXYMODEL_H

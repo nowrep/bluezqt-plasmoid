@@ -23,10 +23,12 @@ import QtQuick 2.2
 import org.qbluez 1.0 as QBluez
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.components 2.0 as PlasmaComponents
+import org.kde.plasma.private.bluetooth 1.0 as PlasmaBt
 
 FocusScope {
-    QBluez.DevicesModel {
+    PlasmaBt.DevicesProxyModel {
         id: devicesModel;
+        sourceModel: QBluez.DevicesModel { }
     }
 
     PlasmaExtras.Heading {
@@ -103,12 +105,22 @@ FocusScope {
             currentIndex: -1;
             enabled: btManager.bluetoothOperational;
             boundsBehavior: Flickable.StopAtBounds;
-            section.property: showSections ? "Paired" : "";
+            section.property: showSections ? "Section" : "";
             section.delegate: Header {
-                text: section == "true" ? i18n("Paired devices") : i18n("Available devices");
+                text: textForSection(section);
             }
             delegate: DeviceItem { }
         }
+    }
+
+    function textForSection(section)
+    {
+        if (section == "Connected") {
+            return i18n("Connected devices");
+        } else if (section == "Paired") {
+            return i18n("Paired devices");
+        }
+        return i18n("Available devices");
     }
 
     states: [
