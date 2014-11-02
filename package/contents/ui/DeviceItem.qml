@@ -130,6 +130,20 @@ PlasmaComponents.ListItem {
                     appLauncher.runUrl(url, "inode/directory");
                 }
             }
+
+            PlasmaComponents.ToolButton {
+                id: connectButton;
+                flat: false;
+                tooltip: Connected ? i18n("Disconnect") : i18n("Connect");
+                iconSource: Connected ? "network-disconnect" : "network-connect";
+                onClicked: {
+                    if (Connected) {
+                        Device.disconnectDevice();
+                    } else {
+                        Device.connectDevice();
+                    }
+                }
+            }
         }
     }
 
