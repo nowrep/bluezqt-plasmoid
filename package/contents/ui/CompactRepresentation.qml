@@ -20,6 +20,7 @@
 
 import QtQuick 2.2
 import org.kde.plasma.core 2.0 as PlasmaCore
+import org.kde.plasma.components 2.0 as PlasmaComponents
 
 MouseArea {
     id: panelIconWidget;
@@ -33,5 +34,12 @@ MouseArea {
         anchors.centerIn: parent;
         width: units.roundToIconSize(Math.min(parent.width, parent.height))
         height: width
+
+        PlasmaComponents.BusyIndicator {
+            id: connectingIndicator;
+            anchors.fill: parent;
+            running: connectInProgress;
+            visible: running;
+        }
     }
 }

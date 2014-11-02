@@ -31,6 +31,7 @@ Item {
     id: bluetoothApplet;
 
     property bool showSections : Plasmoid.configuration.showSections;
+    property bool connectInProgress : false;
 
     Plasmoid.toolTipMainText: i18n("Bluetooth");
     Plasmoid.icon: "preferences-system-bluetooth";
