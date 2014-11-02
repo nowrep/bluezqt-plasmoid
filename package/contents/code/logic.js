@@ -54,11 +54,12 @@ function slotDeviceChanged(device)
 
 function updateStatus()
 {
-    var connectedDevices = 0;
+    var connectedDevices = new Array();
 
     for (var i = 0; i < btManager.devices.length; ++i) {
-        if (btManager.devices[i].connected) {
-            connectedDevices++;
+        var device = btManager.devices[i];
+        if (device.connected) {
+            connectedDevices.push(device);
         }
     }
 
@@ -70,8 +71,12 @@ function updateStatus()
         } else {
             text = i18n("Bluetooth is offline");
         }
-    } else if (connectedDevices > 0) {
-        text = i18ncp("Number of connected devices", "%1 connected device", "%1 connected devices", connectedDevices);
+    } else if (connectedDevices.length > 0) {
+        text = i18ncp("Number of connected devices", "%1 connected device", "%1 connected devices", connectedDevices.length);
+        for (var i = 0; i < connectedDevices.length; ++i) {
+            var device = connectedDevices[i];
+            text += "\n • " + device.friendlyName + " (" + device.address + ")";
+        }
     } else {
         text = i18n("No connected devices");
     }
