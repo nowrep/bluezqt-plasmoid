@@ -153,6 +153,11 @@ PlasmaComponents.ListItem {
                 tooltip: Connected ? i18n("Disconnect") : i18n("Connect");
                 iconSource: Connected ? "network-disconnect" : "network-connect";
                 onClicked: {
+                    if (Connected) {
+                        Device.disconnectDevice();
+                        return;
+                    }
+
                     if (connecting) {
                         return;
                     }
@@ -160,17 +165,10 @@ PlasmaComponents.ListItem {
                     connecting = true;
                     runningActions++;
 
-                    if (Connected) {
-                        Device.disconnectDevice().finished.connect(function(call) {
-                            connecting = false;
-                            runningActions--;
-                        });
-                    } else {
-                        Device.connectDevice().finished.connect(function(call) {
-                            connecting = false;
-                            runningActions--;
-                        });
-                    }
+                    Device.connectDevice().finished.connect(function(call) {
+                        connecting = false;
+                        runningActions--;
+                    });
                 }
             }
         }
