@@ -18,9 +18,6 @@
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var SendFileService = "00001105-0000-1000-8000-00805F9B34FB";
-var BrowseFilesService = "00001106-0000-1000-8000-00805F9B34FB";
-
 function init()
 {
     btManager.adapterAdded.connect(slotAdapterAdded);

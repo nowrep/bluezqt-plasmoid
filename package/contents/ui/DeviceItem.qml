@@ -20,10 +20,9 @@
 */
 
 import QtQuick 2.2
+import org.qbluez 1.0 as QBluez
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
-
-import "plasmapackage:/code/logic.js" as Logic
 
 PlasmaComponents.ListItem {
     id: deviceItem;
@@ -129,7 +128,7 @@ PlasmaComponents.ListItem {
                 flat: false;
                 tooltip: i18n("Send File");
                 iconSource: "edit-copy";
-                visible: Uuids.indexOf(Logic.SendFileService) != -1;
+                visible: Uuids.indexOf(QBluez.Services.ObexObjectPush) != -1;
                 onClicked: {
                     appLauncher.runCommand("bluedevil-sendfile", [ "-u", Ubi ]);
                 }
@@ -140,7 +139,7 @@ PlasmaComponents.ListItem {
                 flat: false;
                 tooltip: i18n("Browse Files");
                 iconSource: "edit-find";
-                visible: Uuids.indexOf(Logic.BrowseFilesService) != -1;
+                visible: Uuids.indexOf(QBluez.Services.ObexFileTransfer) != -1;
                 onClicked: {
                     var url = "obexftp://" + Address.replace(/:/g, "-");
                     appLauncher.runUrl(url, "inode/directory");
