@@ -99,7 +99,7 @@ PlasmaComponents.ListItem {
             id: connectingIndicator;
 
             anchors {
-                right: connectButton.visible ? connectButton.left : parent.right;
+                right: parent.right;
                 rightMargin: Math.round(units.gridUnit / 2);
                 verticalCenter: deviceIcon.verticalCenter;
             }
