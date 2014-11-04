@@ -6,3 +6,5 @@ KDE Bluetooth Plasmoid
 Bluetooth plasmoid using only QBluez QML API.
 
 Plasmoid code is based on great Plasma Network Management.
+
+![Screenshot](/other/screenshot.png?raw=true)
