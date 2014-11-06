@@ -44,8 +44,6 @@ QVariant DevicesProxyModel::data(const QModelIndex &index, int role) const
     case SectionRole:
         if (index.data(QBluez::DevicesModel::ConnectedRole).toBool()) {
             return QStringLiteral("Connected");
-        } else if (index.data(QBluez::DevicesModel::PairedRole).toBool()) {
-            return QStringLiteral("Paired");
         }
         return QStringLiteral("Available");
 
@@ -79,22 +77,14 @@ QVariant DevicesProxyModel::data(const QModelIndex &index, int role) const
 bool DevicesProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     bool leftConnected = left.data(QBluez::DevicesModel::ConnectedRole).toBool();
-    bool leftPaired = left.data(QBluez::DevicesModel::PairedRole).toBool();
     const QString leftName = left.data(QBluez::DevicesModel::FriendlyNameRole).toString();
 
     bool rightConnected = right.data(QBluez::DevicesModel::ConnectedRole).toBool();
-    bool rightPaired = right.data(QBluez::DevicesModel::PairedRole).toBool();
     const QString rightName = right.data(QBluez::DevicesModel::FriendlyNameRole).toString();
 
     if (leftConnected < rightConnected) {
         return true;
     } else if (leftConnected > rightConnected) {
-        return false;
-    }
-
-    if (leftPaired > rightPaired) {
-        return true;
-    } else if (leftPaired < rightPaired) {
         return false;
     }
 

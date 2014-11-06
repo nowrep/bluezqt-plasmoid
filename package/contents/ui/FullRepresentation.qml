@@ -107,20 +107,10 @@ FocusScope {
             boundsBehavior: Flickable.StopAtBounds;
             section.property: showSections ? "Section" : "";
             section.delegate: Header {
-                text: textForSection(section);
+                text: section == "Connected" ? i18n("Connected devices") : i18n("Available devices");
             }
             delegate: DeviceItem { }
         }
-    }
-
-    function textForSection(section)
-    {
-        if (section == "Connected") {
-            return i18n("Connected devices");
-        } else if (section == "Paired") {
-            return i18n("Paired devices");
-        }
-        return i18n("Available devices");
     }
 
     states: [

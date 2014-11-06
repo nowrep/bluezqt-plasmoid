@@ -317,11 +317,11 @@ PlasmaComponents.ListItem {
                 details.push(Alias);
             }
 
+            details.push(i18n("Paired"));
+            details.push(boolToString(Paired));
+
             details.push(i18n("Trusted"));
             details.push(boolToString(Trusted));
-
-            details.push(i18n("Blocked"));
-            details.push(boolToString(Blocked));
 
             details.push(i18n("Adapter"));
             details.push(AdapterFullName);
