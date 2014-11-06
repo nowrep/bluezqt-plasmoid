@@ -30,7 +30,9 @@ class DevicesProxyModel : public QSortFilterProxyModel
 
 public:
     enum AdditionalRoles {
-        SectionRole = QBluez::DevicesModel::LastRole + 10
+        SectionRole = QBluez::DevicesModel::LastRole + 10,
+        DeviceFullNameRole = QBluez::DevicesModel::LastRole + 11,
+        AdapterFullNameRole = QBluez::DevicesModel::LastRole + 12
     };
 
     DevicesProxyModel(QObject *parent = 0);
@@ -38,6 +40,10 @@ public:
     QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
     QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const Q_DECL_OVERRIDE;
+
+private:
+    bool duplicateIndexAddress(const QModelIndex &idx) const;
+    QString adapterHciString(const QString &ubi) const;
 };
 
 #endif // DEVICESPROXYMODEL_H

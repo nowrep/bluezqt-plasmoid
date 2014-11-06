@@ -75,7 +75,7 @@ PlasmaComponents.ListItem {
 
             height: paintedHeight;
             elide: Text.ElideRight;
-            text: FriendlyName;
+            text: DeviceFullName;
         }
 
         PlasmaComponents.Label {
@@ -324,7 +324,7 @@ PlasmaComponents.ListItem {
             details.push(boolToString(Blocked));
 
             details.push(i18n("Adapter"));
-            details.push(Adapter.name);
+            details.push(AdapterFullName);
 
             currentDeviceDetails = details;
             expandableComponentLoader.sourceComponent = detailsComponent;
