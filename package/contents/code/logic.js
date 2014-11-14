@@ -61,6 +61,7 @@ function updateStatus()
     }
 
     var text = "";
+    var bullet = "\u2022";
 
     if (!btManager.bluetoothOperational) {
         if (btManager.adapters.length == 0) {
@@ -72,7 +73,7 @@ function updateStatus()
         text = i18ncp("Number of connected devices", "%1 connected device", "%1 connected devices", connectedDevices.length);
         for (var i = 0; i < connectedDevices.length; ++i) {
             var device = connectedDevices[i];
-            text += "\n • " + device.friendlyName + " (" + device.address + ")";
+            text += "\n " + bullet + " " + device.friendlyName + " (" + device.address + ")";
         }
     } else {
         text = i18n("No connected devices");
