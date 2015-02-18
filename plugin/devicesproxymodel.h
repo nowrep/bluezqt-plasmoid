@@ -21,7 +21,7 @@
 #ifndef DEVICESPROXYMODEL_H
 #define DEVICESPROXYMODEL_H
 
-#include <QBluez/DevicesModel>
+#include <BluezQt/DevicesModel>
 #include <QSortFilterProxyModel>
 
 class DevicesProxyModel : public QSortFilterProxyModel
@@ -30,9 +30,9 @@ class DevicesProxyModel : public QSortFilterProxyModel
 
 public:
     enum AdditionalRoles {
-        SectionRole = QBluez::DevicesModel::LastRole + 10,
-        DeviceFullNameRole = QBluez::DevicesModel::LastRole + 11,
-        AdapterFullNameRole = QBluez::DevicesModel::LastRole + 12
+        SectionRole = BluezQt::DevicesModel::LastRole + 10,
+        DeviceFullNameRole = BluezQt::DevicesModel::LastRole + 11,
+        AdapterFullNameRole = BluezQt::DevicesModel::LastRole + 12
     };
 
     DevicesProxyModel(QObject *parent = 0);

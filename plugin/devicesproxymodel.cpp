@@ -1,5 +1,5 @@
 /*
-    Copyright 2014 David Rosca <nowrep@gmail.com>
+    Copyright 2014-2015 David Rosca <nowrep@gmail.com>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
 
 #include "devicesproxymodel.h"
 
-#include <QBluez/Adapter>
+#include <BluezQt/Adapter>
 
 DevicesProxyModel::DevicesProxyModel(QObject *parent)
     : QSortFilterProxyModel(parent)
@@ -42,25 +42,25 @@ QVariant DevicesProxyModel::data(const QModelIndex &index, int role) const
 {
     switch (role) {
     case SectionRole:
-        if (index.data(QBluez::DevicesModel::ConnectedRole).toBool()) {
+        if (index.data(BluezQt::DevicesModel::ConnectedRole).toBool()) {
             return QStringLiteral("Connected");
         }
         return QStringLiteral("Available");
 
     case DeviceFullNameRole:
         if (duplicateIndexAddress(index)) {
-            const QString name = QSortFilterProxyModel::data(index, QBluez::DevicesModel::FriendlyNameRole).toString();
-            const QString ubi = QSortFilterProxyModel::data(index, QBluez::DevicesModel::UbiRole).toString();
+            const QString name = QSortFilterProxyModel::data(index, BluezQt::DevicesModel::FriendlyNameRole).toString();
+            const QString ubi = QSortFilterProxyModel::data(index, BluezQt::DevicesModel::UbiRole).toString();
             const QString hci = adapterHciString(ubi);
 
             if (!hci.isEmpty()) {
                 return QString(QStringLiteral("%1 - %2")).arg(name, hci);
             }
         }
-        return QSortFilterProxyModel::data(index, QBluez::DevicesModel::FriendlyNameRole);
+        return QSortFilterProxyModel::data(index, BluezQt::DevicesModel::FriendlyNameRole);
 
     case AdapterFullNameRole: {
-        QBluez::Adapter *adapter = QSortFilterProxyModel::data(index, QBluez::DevicesModel::AdapterRole).value<QBluez::Adapter*>();
+        BluezQt::Adapter *adapter = QSortFilterProxyModel::data(index, BluezQt::DevicesModel::AdapterRole).value<BluezQt::Adapter*>();
         const QString hci = adapterHciString(adapter->ubi());
 
         if (!hci.isEmpty()) {
@@ -76,11 +76,11 @@ QVariant DevicesProxyModel::data(const QModelIndex &index, int role) const
 
 bool DevicesProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    bool leftConnected = left.data(QBluez::DevicesModel::ConnectedRole).toBool();
-    const QString leftName = left.data(QBluez::DevicesModel::FriendlyNameRole).toString();
+    bool leftConnected = left.data(BluezQt::DevicesModel::ConnectedRole).toBool();
+    const QString leftName = left.data(BluezQt::DevicesModel::FriendlyNameRole).toString();
 
-    bool rightConnected = right.data(QBluez::DevicesModel::ConnectedRole).toBool();
-    const QString rightName = right.data(QBluez::DevicesModel::FriendlyNameRole).toString();
+    bool rightConnected = right.data(BluezQt::DevicesModel::ConnectedRole).toBool();
+    const QString rightName = right.data(BluezQt::DevicesModel::FriendlyNameRole).toString();
 
     if (leftConnected < rightConnected) {
         return true;
@@ -94,8 +94,8 @@ bool DevicesProxyModel::lessThan(const QModelIndex &left, const QModelIndex &rig
 bool DevicesProxyModel::duplicateIndexAddress(const QModelIndex &idx) const
 {
     const QModelIndexList list = match(index(0, 0),
-                                       QBluez::DevicesModel::AddressRole,
-                                       idx.data(QBluez::DevicesModel::AddressRole).toString(),
+                                       BluezQt::DevicesModel::AddressRole,
+                                       idx.data(BluezQt::DevicesModel::AddressRole).toString(),
                                        2,
                                        Qt::MatchExactly);
     return list.size() > 1;
