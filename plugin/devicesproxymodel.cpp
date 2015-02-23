@@ -65,7 +65,7 @@ QVariant DevicesProxyModel::data(const QModelIndex &index, int role) const
         const QString hci = adapterHciString(adapter->ubi());
 
         if (!hci.isEmpty()) {
-            return QString(QStringLiteral("%1 (%2)")).arg(adapter->alias(), hci);
+            return QString(QStringLiteral("%1 (%2)")).arg(adapter->name(), hci);
         }
         // fallthrough
     }

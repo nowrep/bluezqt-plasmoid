@@ -20,7 +20,7 @@
 */
 
 import QtQuick 2.2
-import org.bluezqt 1.0 as BluezQt
+import org.kde.bluezqt 1.0 as BluezQt
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.private.bluetooth 1.0 as PlasmaBt
