@@ -42,6 +42,7 @@ public:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const Q_DECL_OVERRIDE;
 
 private:
+    BluezQt::DevicesModel *devicesModel() const;
     bool duplicateIndexAddress(const QModelIndex &idx) const;
     QString adapterHciString(const QString &ubi) const;
 };

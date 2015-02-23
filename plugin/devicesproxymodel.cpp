@@ -21,6 +21,7 @@
 #include "devicesproxymodel.h"
 
 #include <BluezQt/Adapter>
+#include <BluezQt/Device>
 
 DevicesProxyModel::DevicesProxyModel(QObject *parent)
     : QSortFilterProxyModel(parent)
@@ -60,7 +61,7 @@ QVariant DevicesProxyModel::data(const QModelIndex &index, int role) const
         return QSortFilterProxyModel::data(index, BluezQt::DevicesModel::FriendlyNameRole);
 
     case AdapterFullNameRole: {
-        BluezQt::Adapter *adapter = QSortFilterProxyModel::data(index, BluezQt::DevicesModel::AdapterRole).value<BluezQt::Adapter*>();
+        BluezQt::AdapterPtr adapter = devicesModel()->device(index)->adapter();
         const QString hci = adapterHciString(adapter->ubi());
 
         if (!hci.isEmpty()) {
@@ -89,6 +90,12 @@ bool DevicesProxyModel::lessThan(const QModelIndex &left, const QModelIndex &rig
     }
 
     return QString::localeAwareCompare(leftName, rightName) > 0;
+}
+
+BluezQt::DevicesModel *DevicesProxyModel::devicesModel() const
+{
+    Q_ASSERT(qobject_cast<BluezQt::DevicesModel*>(sourceModel()));
+    return static_cast<BluezQt::DevicesModel*>(sourceModel());
 }
 
 bool DevicesProxyModel::duplicateIndexAddress(const QModelIndex &idx) const

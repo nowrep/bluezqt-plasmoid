@@ -27,26 +27,13 @@ function init()
         slotAdapterAdded(btManager.adapters[i]);
     }
 
-    for (var i = 0; i < btManager.devices.length; ++i) {
-        slotDeviceAdded(btManager.devices[i]);
-    }
-
     updateStatus();
 }
 
 function slotAdapterAdded(adapter)
 {
-    adapter.deviceFound.connect(slotDeviceAdded);
-}
-
-function slotDeviceAdded(device)
-{
-    device.deviceChanged.connect(slotDeviceChanged);
-}
-
-function slotDeviceChanged(device)
-{
-    updateStatus();
+    adapter.deviceFound.connect(updateStatus);
+    adapter.deviceChanged.connect(updateStatus);
 }
 
 function updateStatus()
