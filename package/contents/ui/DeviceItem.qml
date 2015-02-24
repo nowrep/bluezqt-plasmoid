@@ -312,9 +312,9 @@ PlasmaComponents.ListItem {
             details.push(i18n("Name"));
             details.push(Name);
 
-            if (Alias != Name) {
-                details.push(i18n("Alias"));
-                details.push(Alias);
+            if (Name != RemoteName) {
+                details.push(i18n("Remote Name"));
+                details.push(RemoteName);
             }
 
             details.push(i18n("Paired"));
