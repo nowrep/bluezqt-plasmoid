@@ -31,7 +31,7 @@ PlasmaComponents.ListItem {
     property bool visibleDetails : false;
     property bool connecting : false;
     property int baseHeight : deviceItemBase.height;
-    property variant currentDeviceDetails : [];
+    property var currentDeviceDetails : [];
 
     height: expanded ? baseHeight + expandableComponentLoader.height + Math.round(units.gridUnit / 3) : baseHeight;
     checked: ListView.isCurrentItem;
