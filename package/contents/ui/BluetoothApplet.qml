@@ -49,7 +49,7 @@ Item {
     BluezQt.Manager {
         id: btManager;
 
-        onInitialized: {
+        onInitFinished: {
             Logic.init();
         }
     }
