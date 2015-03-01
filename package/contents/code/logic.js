@@ -1,5 +1,5 @@
 /*
-    Copyright 2014 David Rosca <nowrep@gmail.com>
+    Copyright 2014-2015 David Rosca <nowrep@gmail.com>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -20,20 +20,10 @@
 
 function init()
 {
-    btManager.adapterAdded.connect(slotAdapterAdded);
-    btManager.bluetoothOperationalChanged.connect(updateStatus);
-
-    for (var i = 0; i < btManager.adapters.length; ++i) {
-        slotAdapterAdded(btManager.adapters[i]);
-    }
+    btManager.deviceAdded.connect(updateStatus);
+    btManager.deviceChanged.connect(updateStatus);
 
     updateStatus();
-}
-
-function slotAdapterAdded(adapter)
-{
-    adapter.deviceFound.connect(updateStatus);
-    adapter.deviceChanged.connect(updateStatus);
 }
 
 function updateStatus()
@@ -67,6 +57,7 @@ function updateStatus()
     }
 
     plasmoid.toolTipSubText = text;
+    deviceConnected = connectedDevices.length > 0;
 
     if (btManager.bluetoothOperational) {
         plasmoid.status = PlasmaCore.Types.ActiveStatus;
@@ -74,4 +65,3 @@ function updateStatus()
         plasmoid.status = PlasmaCore.Types.PassiveStatus;
     }
 }
-

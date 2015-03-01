@@ -32,14 +32,27 @@ MouseArea {
         source: "preferences-system-bluetooth";
         enabled: btManager.bluetoothOperational;
         anchors.centerIn: parent;
-        width: units.roundToIconSize(Math.min(parent.width, parent.height))
-        height: width
+        width: units.roundToIconSize(Math.min(parent.width, parent.height));
+        height: width;
 
         PlasmaComponents.BusyIndicator {
             id: busyIndicator;
             anchors.fill: parent;
             running: runningActions > 0;
             visible: running;
+        }
+
+        PlasmaCore.IconItem {
+            id: connectedIndicator;
+            source: "emblem-symbolic-link";
+            width: parent.width / 2;
+            height: width;
+            visible: deviceConnected;
+
+            anchors {
+                bottom: parent.bottom;
+                right: parent.right;
+            }
         }
     }
 }
