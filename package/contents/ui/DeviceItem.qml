@@ -76,6 +76,7 @@ PlasmaComponents.ListItem {
             height: paintedHeight;
             elide: Text.ElideRight;
             text: DeviceFullName;
+            textFormat: Text.PlainText;
         }
 
         PlasmaComponents.Label {
@@ -93,6 +94,7 @@ PlasmaComponents.ListItem {
             font.pointSize: theme.smallestFont.pointSize;
             opacity: 0.6;
             text: Address;
+            textFormat: Text.PlainText;
         }
 
         PlasmaComponents.BusyIndicator {
