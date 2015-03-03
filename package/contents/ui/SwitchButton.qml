@@ -1,6 +1,6 @@
 /*
     Copyright 2014 Jan Grulich <jgrulich@redhat.com>
-    Copyright 2014 David Rosca <nowrep@gmail.com>
+    Copyright 2014-2015 David Rosca <nowrep@gmail.com>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
