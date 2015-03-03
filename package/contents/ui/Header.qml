@@ -23,27 +23,27 @@ import QtQuick 2.2
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 PlasmaComponents.ListItem {
-    id: header;
+    id: header
 
-    property alias text: headerLabel.text;
+    property alias text: headerLabel.text
 
     anchors {
-        left: parent.left;
-        right: parent.right;
+        left: parent.left
+        right: parent.right
     }
 
-    height: headerLabel.height + units.gridUnit;
-    sectionDelegate: true;
+    height: headerLabel.height + units.gridUnit
+    sectionDelegate: true
 
     PlasmaComponents.Label {
-        id: headerLabel;
+        id: headerLabel
 
         anchors {
-            horizontalCenter: parent.horizontalCenter;
-            verticalCenter: parent.verticalCenter;
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
         }
 
-        height: paintedHeight;
-        font.weight: Font.DemiBold;
+        height: paintedHeight
+        font.weight: Font.DemiBold
     }
 }

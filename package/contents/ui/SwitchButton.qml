@@ -24,32 +24,32 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 Item {
-    id: switchButton;
+    id: switchButton
 
-    property alias icon: switchButtonIcon.source;
-    property alias checked: switchButtonCheckbox.checked;
-    property alias enabled: switchButtonCheckbox.enabled;
+    property alias icon: switchButtonIcon.source
+    property alias checked: switchButtonCheckbox.checked
+    property alias enabled: switchButtonCheckbox.enabled
 
-    signal clicked();
+    signal clicked()
 
-    height: switchButtonCheckbox.height + Math.round(units.gridUnit / 2);
-    width: switchButtonCheckbox.width + switchButtonIcon.width + units.gridUnit;
+    height: switchButtonCheckbox.height + Math.round(units.gridUnit / 2)
+    width: switchButtonCheckbox.width + switchButtonIcon.width + units.gridUnit
 
     PlasmaComponents.CheckBox {
-        id: switchButtonCheckbox;
+        id: switchButtonCheckbox
 
         anchors {
-            bottomMargin: Math.round(units.gridUnit / 3);
-            left: parent.left;
-            leftMargin: Math.round(units.gridUnit / 2);
-            topMargin: Math.round(units.gridUnit / 3);
-            verticalCenter: parent.verticalCenter;
+            bottomMargin: Math.round(units.gridUnit / 3)
+            left: parent.left
+            leftMargin: Math.round(units.gridUnit / 2)
+            topMargin: Math.round(units.gridUnit / 3)
+            verticalCenter: parent.verticalCenter
         }
 
         // Fix issue when checked property bindings stops working after
         // clicking on checkbox
         MouseArea {
-            anchors.fill: parent;
+            anchors.fill: parent
             onClicked: {
                 if (switchButton.enabled) {
                     switchButton.clicked();
@@ -59,12 +59,12 @@ Item {
     }
 
     PlasmaCore.IconItem {
-        id: switchButtonIcon;
-        enabled: switchButtonCheckbox.checked;
+        id: switchButtonIcon
+        enabled: switchButtonCheckbox.checked
 
         anchors {
-            left: switchButtonCheckbox.right;
-            verticalCenter: parent.verticalCenter;
+            left: switchButtonCheckbox.right
+            verticalCenter: parent.verticalCenter
         }
     }
 }

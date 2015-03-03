@@ -25,123 +25,127 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 PlasmaComponents.ListItem {
-    id: deviceItem;
+    id: deviceItem
 
-    property bool expanded : visibleDetails;
-    property bool visibleDetails : false;
-    property bool connecting : false;
-    property int baseHeight : deviceItemBase.height;
-    property var currentDeviceDetails : [];
+    property bool expanded : visibleDetails
+    property bool visibleDetails : false
+    property bool connecting : false
+    property int baseHeight : deviceItemBase.height
+    property var currentDeviceDetails : []
 
-    height: expanded ? baseHeight + expandableComponentLoader.height + Math.round(units.gridUnit / 3) : baseHeight;
-    checked: ListView.isCurrentItem;
-    enabled: true;
+    height: expanded ? baseHeight + expandableComponentLoader.height + Math.round(units.gridUnit / 3) : baseHeight
+    checked: ListView.isCurrentItem
+    enabled: true
 
     Item {
-        id: deviceItemBase;
+        id: deviceItemBase
 
         anchors {
-            left: parent.left;
-            right: parent.right;
-            top: parent.top;
+            left: parent.left
+            right: parent.right
+            top: parent.top
             // Reset top margin from PlasmaComponents.ListItem
-            topMargin: -Math.round(units.gridUnit / 3);
+            topMargin: -Math.round(units.gridUnit / 3)
         }
 
-        height: Math.max(units.iconSizes.medium, deviceNameLabel.height + deviceAddressLabel.height) + Math.round(units.gridUnit / 2);
+        height: Math.max(units.iconSizes.medium, deviceNameLabel.height + deviceAddressLabel.height) + Math.round(units.gridUnit / 2)
 
         PlasmaCore.IconItem {
-            id: deviceIcon;
+            id: deviceIcon
 
             anchors {
-                left: parent.left;
-                verticalCenter: parent.verticalCenter;
+                left: parent.left
+                verticalCenter: parent.verticalCenter
             }
 
-            height: units.iconSizes.medium;
-            width: height;
-            source: Icon;
+            height: units.iconSizes.medium
+            width: height
+            source: Icon
         }
 
         PlasmaComponents.Label {
-            id: deviceNameLabel;
+            id: deviceNameLabel
 
             anchors {
-                bottom: deviceIcon.verticalCenter;
-                left: deviceIcon.right;
-                leftMargin: Math.round(units.gridUnit / 2);
-                right: deviceActionsRect.visible ? deviceActionsRect.left : parent.right;
+                bottom: deviceIcon.verticalCenter
+                left: deviceIcon.right
+                leftMargin: Math.round(units.gridUnit / 2)
+                right: deviceActionsRect.visible ? deviceActionsRect.left : parent.right
             }
 
-            height: paintedHeight;
-            elide: Text.ElideRight;
-            text: DeviceFullName;
-            textFormat: Text.PlainText;
+            height: paintedHeight
+            elide: Text.ElideRight
+            text: DeviceFullName
+            textFormat: Text.PlainText
         }
 
         PlasmaComponents.Label {
-            id: deviceAddressLabel;
+            id: deviceAddressLabel
 
             anchors {
-                left: deviceIcon.right;
-                leftMargin: Math.round(units.gridUnit / 2);
-                right: deviceActionsRect.visible ? deviceActionsRect.left : parent.right;
-                top: deviceNameLabel.bottom;
+                left: deviceIcon.right
+                leftMargin: Math.round(units.gridUnit / 2)
+                right: deviceActionsRect.visible ? deviceActionsRect.left : parent.right
+                top: deviceNameLabel.bottom
             }
 
-            height: paintedHeight;
-            elide: Text.ElideRight;
-            font.pointSize: theme.smallestFont.pointSize;
-            opacity: 0.6;
-            text: Address;
-            textFormat: Text.PlainText;
+            height: paintedHeight
+            elide: Text.ElideRight
+            font.pointSize: theme.smallestFont.pointSize
+            opacity: 0.6
+            text: Address
+            textFormat: Text.PlainText
         }
 
         PlasmaComponents.BusyIndicator {
-            id: connectingIndicator;
+            id: connectingIndicator
 
             anchors {
-                right: parent.right;
-                rightMargin: Math.round(units.gridUnit / 2);
-                verticalCenter: deviceIcon.verticalCenter;
+                right: parent.right
+                rightMargin: Math.round(units.gridUnit / 2)
+                verticalCenter: deviceIcon.verticalCenter
             }
 
-            height: units.iconSizes.medium;
-            width: height;
-            running: connecting;
-            visible: running && !connectButton.visible;
+            height: units.iconSizes.medium
+            width: height
+            running: connecting
+            visible: running && !connectButton.visible
         }
 
         Row {
-            id: deviceActionsRect;
-            spacing: 2;
-            opacity: deviceItem.containsMouse ? 1 : 0;
-            visible: opacity != 0;
-            Behavior on opacity { NumberAnimation { duration: units.shortDuration } }
+            id: deviceActionsRect
+            spacing: 2
+            opacity: deviceItem.containsMouse ? 1 : 0
+            visible: opacity != 0
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: units.shortDuration
+                }
+            }
 
             anchors {
-                right: parent.right;
-                rightMargin: Math.round(units.gridUnit / 2);
-                verticalCenter: deviceIcon.verticalCenter;
+                right: parent.right
+                rightMargin: Math.round(units.gridUnit / 2)
+                verticalCenter: deviceIcon.verticalCenter
             }
 
             PlasmaComponents.ToolButton {
-                id: sendFileButton;
-                flat: false;
-                tooltip: i18n("Send File");
-                iconSource: "edit-copy";
-                visible: Uuids.indexOf(BluezQt.Services.ObexObjectPush) != -1;
+                id: sendFileButton
+                flat: false
+                tooltip: i18n("Send File")
+                iconSource: "edit-copy"
+                visible: Uuids.indexOf(BluezQt.Services.ObexObjectPush) != -1
                 onClicked: {
                     appLauncher.runCommand("bluedevil-sendfile", [ "-u", Ubi ]);
                 }
             }
 
             PlasmaComponents.ToolButton {
-                id: browseFilesButton;
-                flat: false;
-                tooltip: i18n("Browse Files");
-                iconSource: "edit-find";
-                visible: Uuids.indexOf(BluezQt.Services.ObexFileTransfer) != -1;
+                id: browseFilesButton
+                flat: false
+                tooltip: i18n("Browse Files")
+                iconSource: "edit-find"
+                visible: Uuids.indexOf(BluezQt.Services.ObexFileTransfer) != -1
                 onClicked: {
                     var url = "obexftp://" + Address.replace(/:/g, "-");
                     appLauncher.runUrl(url, "inode/directory");
@@ -149,10 +153,10 @@ PlasmaComponents.ListItem {
             }
 
             PlasmaComponents.ToolButton {
-                id: connectButton;
-                flat: false;
-                tooltip: Connected ? i18n("Disconnect") : i18n("Connect");
-                iconSource: Connected ? "network-disconnect" : "network-connect";
+                id: connectButton
+                flat: false
+                tooltip: Connected ? i18n("Disconnect") : i18n("Connect")
+                iconSource: Connected ? "network-disconnect" : "network-connect"
                 onClicked: {
                     if (Connected) {
                         Device.disconnectDevice();
@@ -176,77 +180,80 @@ PlasmaComponents.ListItem {
     }
 
     Loader {
-        id: expandableComponentLoader;
+        id: expandableComponentLoader
 
         anchors {
-            left: parent.left;
-            right: parent.right;
-            top: deviceItemBase.bottom;
+            left: parent.left
+            right: parent.right
+            top: deviceItemBase.bottom
         }
     }
 
     Component {
-        id: detailsComponent;
+        id: detailsComponent
 
         Item {
-            height: childrenRect.height;
+            height: childrenRect.height
 
             PlasmaCore.SvgItem {
-                id: detailsSeparator;
+                id: detailsSeparator
 
                 anchors {
-                    left: parent.left;
-                    right: parent.right;
-                    top: parent.top;
+                    left: parent.left
+                    right: parent.right
+                    top: parent.top
                 }
 
-                height: lineSvg.elementSize("horizontal-line").height;
-                width: parent.width;
-                elementId: "horizontal-line";
-                svg: PlasmaCore.Svg { id: lineSvg; imagePath: "widgets/line" }
+                height: lineSvg.elementSize("horizontal-line").height
+                width: parent.width
+                elementId: "horizontal-line"
+                svg: PlasmaCore.Svg {
+                    id: lineSvg
+                    imagePath: "widgets/line"
+                }
             }
 
             Column {
-                id: details;
+                id: details
 
                 anchors {
-                    left: parent.left;
-                    leftMargin: units.iconSizes.medium;
-                    right: parent.right;
-                    top: detailsSeparator.bottom;
-                    topMargin: Math.round(units.gridUnit / 3);
+                    left: parent.left
+                    leftMargin: units.iconSizes.medium
+                    right: parent.right
+                    top: detailsSeparator.bottom
+                    topMargin: Math.round(units.gridUnit / 3)
                 }
 
                 Repeater {
-                    id: repeater;
+                    id: repeater
 
-                    property int longestString: 0;
+                    property int longestString: 0
 
-                    model: currentDeviceDetails.length / 2;
+                    model: currentDeviceDetails.length / 2
 
                     Item {
                         anchors {
-                            left: parent.left;
-                            right: parent.right;
-                            topMargin: Math.round(units.gridUnit / 3);
+                            left: parent.left
+                            right: parent.right
+                            topMargin: Math.round(units.gridUnit / 3)
                         }
 
-                        height: Math.max(detailNameLabel.height, detailValueLabel.height);
+                        height: Math.max(detailNameLabel.height, detailValueLabel.height)
 
                         PlasmaComponents.Label {
-                            id: detailNameLabel;
+                            id: detailNameLabel
 
                             anchors {
-                                left: parent.left;
-                                leftMargin: repeater.longestString - paintedWidth + Math.round(units.gridUnit / 2);
-                                verticalCenter: parent.verticalCenter;
+                                left: parent.left
+                                leftMargin: repeater.longestString - paintedWidth + Math.round(units.gridUnit / 2)
+                                verticalCenter: parent.verticalCenter
                             }
 
-                            height: paintedHeight;
-                            font.pointSize: theme.smallestFont.pointSize;
-                            horizontalAlignment: Text.AlignRight;
-                            opacity: 0.6;
-                            text: "<b>" + currentDeviceDetails[index*2] + "</b>: &nbsp";
+                            height: paintedHeight
+                            font.pointSize: theme.smallestFont.pointSize
+                            horizontalAlignment: Text.AlignRight
+                            opacity: 0.6
+                            text: "<b>" + currentDeviceDetails[index*2] + "</b>: &nbsp"
 
                             Component.onCompleted: {
                                 if (paintedWidth > repeater.longestString) {
@@ -259,17 +266,17 @@ PlasmaComponents.ListItem {
                             id: detailValueLabel;
 
                             anchors {
-                                left: detailNameLabel.right;
-                                right: parent.right;
-                                verticalCenter: parent.verticalCenter;
+                                left: detailNameLabel.right
+                                right: parent.right
+                                verticalCenter: parent.verticalCenter
                             }
 
-                            height: paintedHeight;
-                            elide: Text.ElideRight;
-                            font.pointSize: theme.smallestFont.pointSize;
-                            opacity: 0.6;
-                            text: currentDeviceDetails[(index*2)+1];
-                            textFormat: Text.StyledText;
+                            height: paintedHeight
+                            elide: Text.ElideRight
+                            font.pointSize: theme.smallestFont.pointSize
+                            opacity: 0.6
+                            text: currentDeviceDetails[(index*2)+1]
+                            textFormat: Text.StyledText
                         }
                     }
                 }
@@ -279,8 +286,8 @@ PlasmaComponents.ListItem {
 
     states: [
         State {
-            name: "collapsed";
-            when: !visibleDetails;
+            name: "collapsed"
+            when: !visibleDetails
 
             StateChangeScript {
                 script: if (expandableComponentLoader.status == Loader.Ready) {
@@ -290,8 +297,8 @@ PlasmaComponents.ListItem {
         },
 
         State {
-            name: "expandedDetails";
-            when: visibleDetails;
+            name: "expandedDetails"
+            when: visibleDetails
 
             StateChangeScript {
                 script: createContent();

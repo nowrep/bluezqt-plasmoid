@@ -24,28 +24,28 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 Item {
-    id: toolbar;
+    id: toolbar
 
-    height: btSwitchButton.height;
+    height: btSwitchButton.height
 
     PlasmaCore.Svg {
-        id: lineSvg;
-        imagePath: "widgets/line";
+        id: lineSvg
+        imagePath: "widgets/line"
     }
 
     Row {
         anchors {
-            bottom: parent.bottom;
-            left: parent.left;
-            top: parent.top;
+            bottom: parent.bottom
+            left: parent.left
+            top: parent.top
         }
 
         SwitchButton {
-            id: btSwitchButton;
+            id: btSwitchButton
 
-            checked: btManager.bluetoothOperational;
-            enabled: btManager.adapters.length > 0;
-            icon: "preferences-system-bluetooth";
+            checked: btManager.bluetoothOperational
+            enabled: btManager.adapters.length > 0
+            icon: "preferences-system-bluetooth"
 
             onClicked: {
                 for (var i = 0; i < btManager.adapters.length; ++i) {
@@ -57,20 +57,20 @@ Item {
     }
 
     Row {
-        id: rightButtons;
-        spacing: 5;
+        id: rightButtons
+        spacing: 5
 
         anchors {
-            right: parent.right;
-            rightMargin: Math.round(units.gridUnit / 2);
-            verticalCenter: parent.verticalCenter;
+            right: parent.right
+            rightMargin: Math.round(units.gridUnit / 2)
+            verticalCenter: parent.verticalCenter
         }
 
         PlasmaComponents.ToolButton {
-            id: addDeviceButton;
+            id: addDeviceButton
 
-            iconSource: "list-add";
-            tooltip: i18n("Add New Device");
+            iconSource: "list-add"
+            tooltip: i18n("Add New Device")
 
             onClicked: {
                 appLauncher.runCommand("bluedevil-wizard");
@@ -78,10 +78,10 @@ Item {
         }
 
         PlasmaComponents.ToolButton {
-            id: openSettingsButton;
+            id: openSettingsButton
 
-            iconSource: "configure";
-            tooltip: i18n("Bluetooth Settings");
+            iconSource: "configure"
+            tooltip: i18n("Bluetooth Settings")
 
             onClicked: {
                 var args = [ "bluedevildevices", "bluedeviltransfer", "bluedeviladapters" ];

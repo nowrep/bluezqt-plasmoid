@@ -28,27 +28,27 @@ import org.kde.plasma.private.bluetooth 1.0 as PlasmaBt
 import "plasmapackage:/code/logic.js" as Logic
 
 Item {
-    id: bluetoothApplet;
+    id: bluetoothApplet
 
-    property bool showSections : Plasmoid.configuration.showSections;
-    property bool deviceConnected : false;
-    property int runningActions : 0;
+    property bool showSections : Plasmoid.configuration.showSections
+    property bool deviceConnected : false
+    property int runningActions : 0
 
-    Plasmoid.toolTipMainText: i18n("Bluetooth");
-    Plasmoid.icon: "preferences-system-bluetooth";
+    Plasmoid.toolTipMainText: i18n("Bluetooth")
+    Plasmoid.icon: "preferences-system-bluetooth"
 
-    Plasmoid.switchWidth: units.gridUnit * 10;
-    Plasmoid.switchHeight: units.gridUnit * 10;
+    Plasmoid.switchWidth: units.gridUnit * 10
+    Plasmoid.switchHeight: units.gridUnit * 10
 
     Plasmoid.compactRepresentation: CompactRepresentation { }
     Plasmoid.fullRepresentation: FullRepresentation {
-        id: dialogItem;
-        anchors.fill: parent;
-        focus: true;
+        id: dialogItem
+        anchors.fill: parent
+        focus: true
     }
 
     BluezQt.Manager {
-        id: btManager;
+        id: btManager
 
         onInitFinished: {
             Logic.init();
@@ -56,6 +56,6 @@ Item {
     }
 
     PlasmaBt.LaunchApp {
-        id: appLauncher;
+        id: appLauncher
     }
 }

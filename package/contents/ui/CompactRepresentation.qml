@@ -23,35 +23,35 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 MouseArea {
-    id: panelIconWidget;
-    anchors.fill: parent;
-    onClicked: plasmoid.expanded = !plasmoid.expanded;
+    id: panelIconWidget
+    anchors.fill: parent
+    onClicked: plasmoid.expanded = !plasmoid.expanded
 
     PlasmaCore.IconItem {
-        id: bluetoothIcon;
-        source: "preferences-system-bluetooth";
-        enabled: btManager.bluetoothOperational;
-        anchors.centerIn: parent;
-        width: units.roundToIconSize(Math.min(parent.width, parent.height));
-        height: width;
+        id: bluetoothIcon
+        source: "preferences-system-bluetooth"
+        enabled: btManager.bluetoothOperational
+        anchors.centerIn: parent
+        width: units.roundToIconSize(Math.min(parent.width, parent.height))
+        height: width
 
         PlasmaComponents.BusyIndicator {
-            id: busyIndicator;
-            anchors.fill: parent;
-            running: runningActions > 0;
-            visible: running;
+            id: busyIndicator
+            anchors.fill: parent
+            running: runningActions > 0
+            visible: running
         }
 
         PlasmaCore.IconItem {
-            id: connectedIndicator;
-            source: "emblem-symbolic-link";
-            width: parent.width / 2;
-            height: width;
-            visible: deviceConnected;
+            id: connectedIndicator
+            source: "emblem-symbolic-link"
+            width: parent.width / 2
+            height: width
+            visible: deviceConnected
 
             anchors {
-                bottom: parent.bottom;
-                right: parent.right;
+                bottom: parent.bottom
+                right: parent.right
             }
         }
     }

@@ -27,68 +27,68 @@ import org.kde.plasma.private.bluetooth 1.0 as PlasmaBt
 
 FocusScope {
     PlasmaBt.DevicesProxyModel {
-        id: devicesModel;
+        id: devicesModel
         sourceModel: BluezQt.DevicesModel { }
     }
 
     PlasmaExtras.Heading {
-        id: noAdaptersHeading;
-        level: 3;
-        opacity: 0.6;
-        text: i18n("No Adapters Available");
+        id: noAdaptersHeading
+        level: 3
+        opacity: 0.6
+        text: i18n("No Adapters Available")
 
         anchors {
-            top: parent.top;
-            left: parent.left;
+            top: parent.top
+            left: parent.left
         }
     }
 
     Toolbar {
-        id: toolbar;
+        id: toolbar
 
         anchors {
-            left: parent.left;
-            right: parent.right;
-            top: parent.top;
+            left: parent.left
+            right: parent.right
+            top: parent.top
         }
     }
 
     PlasmaExtras.ScrollArea {
-        id: scrollView;
-        visible: toolbar.visible;
+        id: scrollView
+        visible: toolbar.visible
 
         anchors {
-            bottom: parent.bottom;
-            left: parent.left;
-            right: parent.right;
-            top: toolbar.bottom;
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+            top: toolbar.bottom
         }
 
         Item {
-            id: noDevicesView;
-            anchors.fill: parent;
+            id: noDevicesView
+            anchors.fill: parent
 
             PlasmaExtras.Heading {
-                id: noDevicesHeading;
-                level: 3;
-                opacity: 0.6;
-                text: i18n("No Devices Found");
+                id: noDevicesHeading
+                level: 3
+                opacity: 0.6
+                text: i18n("No Devices Found")
 
                 anchors {
-                    horizontalCenter: parent.horizontalCenter;
-                    bottom: addDeviceButton.top;
-                    bottomMargin: 5;
+                    horizontalCenter: parent.horizontalCenter
+                    bottom: addDeviceButton.top
+                    bottomMargin: 5
                 }
             }
 
             PlasmaComponents.Button {
-                id: addDeviceButton;
-                text: i18n("Add New Device");
-                iconSource: "list-add";
+                id: addDeviceButton
+                text: i18n("Add New Device")
+                iconSource: "list-add"
 
                 anchors {
-                    horizontalCenter: parent.horizontalCenter;
-                    verticalCenter: parent.verticalCenter;
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
                 }
 
                 onClicked: {
@@ -98,16 +98,16 @@ FocusScope {
         }
 
         ListView {
-            id: devicesView;
-            anchors.fill: parent;
-            clip: true;
-            model: devicesModel;
-            currentIndex: -1;
-            enabled: btManager.bluetoothOperational;
-            boundsBehavior: Flickable.StopAtBounds;
-            section.property: showSections ? "Section" : "";
+            id: devicesView
+            anchors.fill: parent
+            clip: true
+            model: devicesModel
+            currentIndex: -1
+            enabled: btManager.bluetoothOperational
+            boundsBehavior: Flickable.StopAtBounds
+            section.property: showSections ? "Section" : ""
             section.delegate: Header {
-                text: section == "Connected" ? i18n("Connected devices") : i18n("Available devices");
+                text: section == "Connected" ? i18n("Connected devices") : i18n("Available devices")
             }
             delegate: DeviceItem { }
         }
@@ -115,16 +115,16 @@ FocusScope {
 
     states: [
         State {
-            name: "DevicesState";
-            when: btManager.devices.length > 0;
+            name: "DevicesState"
+            when: btManager.devices.length > 0
         },
         State {
-            name: "NoDevicesState";
-            when: btManager.adapters.length > 0 && btManager.devices.length == 0;
+            name: "NoDevicesState"
+            when: btManager.adapters.length > 0 && btManager.devices.length == 0
         },
         State {
-            name: "NoAdaptersState";
-            when: btManager.adapters.length == 0;
+            name: "NoAdaptersState"
+            when: btManager.adapters.length == 0
         }
     ]
 

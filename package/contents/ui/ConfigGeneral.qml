@@ -22,12 +22,12 @@ import QtQuick 2.0
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 Item {
-    id: generalPage;
+    id: generalPage
 
     property alias cfg_showSections: showSectionsCheckBox.checked
 
     PlasmaComponents.CheckBox {
-        id: showSectionsCheckBox;
-        text: i18n("Show sections");
+        id: showSectionsCheckBox
+        text: i18n("Show sections")
     }
 }
