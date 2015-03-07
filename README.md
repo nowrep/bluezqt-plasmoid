@@ -1,7 +1,7 @@
 KDE Bluetooth Plasmoid
 -----------------------------
 
-[BluezQt](http://quickgit.kde.org/?p=scratch%2Fdrosca%2Fqbluez.git): `git://anongit.kde.org/scratch/drosca/qbluez.git`
+[BluezQt](https://projects.kde.org/projects/playground/libs/bluez-qt): `git://anongit.kde.org/bluez-qt`
 
 Bluetooth plasmoid using only BluezQt QML API.
 
