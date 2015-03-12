@@ -1,5 +1,5 @@
 /*
-    Copyright 2014 David Rosca <nowrep@gmail.com>
+    Copyright 2014-2015 David Rosca <nowrep@gmail.com>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -36,6 +36,6 @@ bool LaunchApp::runCommand(const QString &exe, const QStringList &args)
 
 bool LaunchApp::runUrl(const QString &url, const QString &mimeType)
 {
-    return KRun::runUrl(QUrl::fromEncoded(url.toUtf8()), mimeType, new QWidget());
+    return KRun::runUrl(QUrl::fromEncoded(url.toUtf8()), mimeType, 0);
 }
 
