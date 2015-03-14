@@ -70,7 +70,7 @@ PlasmaComponents.ListItem {
                 bottom: deviceIcon.verticalCenter
                 left: deviceIcon.right
                 leftMargin: Math.round(units.gridUnit / 2)
-                right: deviceActionsRect.visible ? deviceActionsRect.left : parent.right
+                right: connectButton.visible ? connectButton.left : parent.right
             }
 
             height: paintedHeight
@@ -85,7 +85,7 @@ PlasmaComponents.ListItem {
             anchors {
                 left: deviceIcon.right
                 leftMargin: Math.round(units.gridUnit / 2)
-                right: deviceActionsRect.visible ? deviceActionsRect.left : parent.right
+                right: connectButton.visible ? connectButton.left : parent.right
                 top: deviceNameLabel.bottom
             }
 
@@ -112,16 +112,8 @@ PlasmaComponents.ListItem {
             visible: running && !connectButton.visible
         }
 
-        Row {
-            id: deviceActionsRect
-            spacing: 2
-            opacity: deviceItem.containsMouse ? 1 : 0
-            visible: opacity != 0
-            Behavior on opacity {
-                NumberAnimation {
-                    duration: units.shortDuration
-                }
-            }
+        PlasmaComponents.Button {
+            id: connectButton
 
             anchors {
                 right: parent.right
@@ -129,52 +121,33 @@ PlasmaComponents.ListItem {
                 verticalCenter: deviceIcon.verticalCenter
             }
 
-            PlasmaComponents.ToolButton {
-                id: sendFileButton
-                flat: false
-                tooltip: i18n("Send File")
-                iconSource: "edit-copy"
-                visible: Uuids.indexOf(BluezQt.Services.ObexObjectPush) != -1
-                onClicked: {
-                    appLauncher.runCommand("bluedevil-sendfile", [ "-u", Ubi ]);
+            text: Connected ? i18n("Disconnect") : i18n("Connect")
+            opacity: !connecting && deviceItem.containsMouse ? 1 : 0
+            visible: opacity != 0
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration: units.shortDuration
                 }
             }
 
-            PlasmaComponents.ToolButton {
-                id: browseFilesButton
-                flat: false
-                tooltip: i18n("Browse Files")
-                iconSource: "edit-find"
-                visible: Uuids.indexOf(BluezQt.Services.ObexFileTransfer) != -1
-                onClicked: {
-                    var url = "obexftp://" + Address.replace(/:/g, "-");
-                    appLauncher.runUrl(url, "inode/directory");
+            onClicked: {
+                if (Connected) {
+                    Device.disconnectDevice();
+                    return;
                 }
-            }
 
-            PlasmaComponents.ToolButton {
-                id: connectButton
-                flat: false
-                tooltip: Connected ? i18n("Disconnect") : i18n("Connect")
-                iconSource: Connected ? "network-disconnect" : "network-connect"
-                onClicked: {
-                    if (Connected) {
-                        Device.disconnectDevice();
-                        return;
-                    }
-
-                    if (connecting) {
-                        return;
-                    }
-
-                    connecting = true;
-                    runningActions++;
-
-                    Device.connectDevice().finished.connect(function(call) {
-                        connecting = false;
-                        runningActions--;
-                    });
+                if (connecting) {
+                    return;
                 }
+
+                connecting = true;
+                runningActions++;
+
+                Device.connectDevice().finished.connect(function(call) {
+                    connecting = false;
+                    runningActions--;
+                });
             }
         }
     }
@@ -214,13 +187,63 @@ PlasmaComponents.ListItem {
             }
 
             Column {
-                id: details
+                id: actionsColumn
 
                 anchors {
                     left: parent.left
                     leftMargin: units.iconSizes.medium
                     right: parent.right
                     top: detailsSeparator.bottom
+                }
+
+                PlasmaComponents.ToolButton {
+                    id: browseFilesButton
+                    text: i18n("Browse Files")
+                    iconSource: "folder"
+                    visible: Uuids.indexOf(BluezQt.Services.ObexFileTransfer) != -1
+
+                    onClicked: {
+                        var url = "obexftp://" + Address.replace(/:/g, "-");
+                        appLauncher.runUrl(url, "inode/directory");
+                    }
+                }
+
+                PlasmaComponents.ToolButton {
+                    id: sendFileButton
+                    text: i18n("Send File")
+                    iconSource: "folder-download"
+                    visible: Uuids.indexOf(BluezQt.Services.ObexObjectPush) != -1
+
+                    onClicked: {
+                        appLauncher.runCommand("bluedevil-sendfile", [ "-u", Ubi ]);
+                    }
+                }
+            }
+
+            PlasmaCore.SvgItem {
+                id: actionsSeparator
+
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    top: actionsColumn.bottom
+                }
+
+                visible: browseFilesButton.visible || sendFileButton.visible
+                height: lineSvg.elementSize("horizontal-line").height
+                width: parent.width
+                elementId: "horizontal-line"
+                svg: lineSvg
+            }
+
+            Column {
+                id: details
+
+                anchors {
+                    left: parent.left
+                    leftMargin: units.iconSizes.medium
+                    right: parent.right
+                    top: actionsSeparator.bottom
                     topMargin: Math.round(units.gridUnit / 3)
                 }
 
