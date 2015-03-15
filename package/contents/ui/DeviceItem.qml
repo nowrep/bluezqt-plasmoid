@@ -147,6 +147,11 @@ PlasmaComponents.ListItem {
                 Device.connectDevice().finished.connect(function(call) {
                     connecting = false;
                     runningActions--;
+
+                    if (call.error) {
+                        var title = Name + " (" + Address + ")";
+                        notify.connectionFailed(title, call);
+                    }
                 });
             }
         }

@@ -58,4 +58,8 @@ Item {
     PlasmaBt.LaunchApp {
         id: appLauncher
     }
+
+    PlasmaBt.Notify {
+        id: notify
+    }
 }

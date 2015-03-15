@@ -18,6 +18,7 @@ find_package(KF5 REQUIRED
     KIO
     I18n
     Plasma
+    Notifications
     BluezQt)
 
 add_subdirectory(plugin)

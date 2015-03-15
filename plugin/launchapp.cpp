@@ -21,7 +21,6 @@
 #include "launchapp.h"
 
 #include <KRun>
-#include <QWidget>
 #include <QProcess>
 
 LaunchApp::LaunchApp(QObject *parent)

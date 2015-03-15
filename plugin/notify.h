@@ -1,5 +1,5 @@
 /*
-    Copyright 2014 David Rosca <nowrep@gmail.com>
+    Copyright 2015 David Rosca <nowrep@gmail.com>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -18,18 +18,23 @@
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "bluetoothplugin.h"
-#include "devicesproxymodel.h"
-#include "launchapp.h"
-#include "notify.h"
+#ifndef NOTIFY_H
+#define NOTIFY_H
 
-#include <QtQml>
+#include <QObject>
+#include <QStringList>
 
-void BluetoothPlugin::registerTypes(const char *uri)
+#include <BluezQt/PendingCall>
+
+class Notify : public QObject
 {
-    Q_ASSERT(uri == QLatin1String("org.kde.plasma.private.bluetooth"));
+    Q_OBJECT
 
-    qmlRegisterType<Notify>(uri, 1, 0, "Notify");
-    qmlRegisterType<LaunchApp>(uri, 1, 0, "LaunchApp");
-    qmlRegisterType<DevicesProxyModel>(uri, 1, 0, "DevicesProxyModel");
-}
+public:
+    Notify(QObject *parent = 0);
+
+public Q_SLOTS:
+    void connectionFailed(const QString &title, BluezQt::PendingCall *call);
+};
+
+#endif // NOTIFY_H
