@@ -37,7 +37,7 @@ Item {
     Plasmoid.toolTipMainText: i18n("Bluetooth")
     Plasmoid.icon: "preferences-system-bluetooth"
 
-    Plasmoid.switchWidth: units.gridUnit * 10
+    Plasmoid.switchWidth: units.gridUnit * 15
     Plasmoid.switchHeight: units.gridUnit * 10
 
     Plasmoid.compactRepresentation: CompactRepresentation { }

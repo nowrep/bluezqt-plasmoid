@@ -33,32 +33,30 @@ Item {
         imagePath: "widgets/line"
     }
 
-    Row {
+    SwitchButton {
+        id: btSwitchButton
+
         anchors {
-            bottom: parent.bottom
             left: parent.left
-            top: parent.top
+            verticalCenter: parent.verticalCenter
         }
 
-        SwitchButton {
-            id: btSwitchButton
+        checked: btManager.bluetoothOperational
+        enabled: btManager.adapters.length > 0
+        icon: "preferences-system-bluetooth"
 
-            checked: btManager.bluetoothOperational
-            enabled: btManager.adapters.length > 0
-            icon: "preferences-system-bluetooth"
-
-            onClicked: {
-                for (var i = 0; i < btManager.adapters.length; ++i) {
-                    var adapter = btManager.adapters[i];
-                    adapter.powered = !adapter.powered;
-                }
+        onClicked: {
+            var powered = !checked
+            for (var i = 0; i < btManager.adapters.length; ++i) {
+                var adapter = btManager.adapters[i];
+                adapter.powered = powered;
             }
         }
     }
 
     Row {
         id: rightButtons
-        spacing: 5
+        spacing: units.smallSpacing
 
         anchors {
             right: parent.right
