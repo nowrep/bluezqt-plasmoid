@@ -68,7 +68,7 @@ Item {
             id: addDeviceButton
 
             iconSource: "list-add"
-            tooltip: i18n("Add New Device")
+            tooltip: i18n("Add New Device...")
 
             onClicked: {
                 appLauncher.runCommand("bluedevil-wizard");
@@ -79,7 +79,7 @@ Item {
             id: openSettingsButton
 
             iconSource: "configure"
-            tooltip: i18n("Bluetooth Settings")
+            tooltip: i18n("Configure Bluetooth...")
 
             onClicked: {
                 var args = [ "bluedevildevices", "bluedeviltransfer", "bluedeviladapters" ];
