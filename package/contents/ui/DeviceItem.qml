@@ -75,6 +75,8 @@ PlasmaComponents.ListItem {
 
             height: paintedHeight
             elide: Text.ElideRight
+            font.weight: Connected ? Font.DemiBold : Font.Normal
+            font.italic: connecting
             text: DeviceFullName
             textFormat: Text.PlainText
         }
