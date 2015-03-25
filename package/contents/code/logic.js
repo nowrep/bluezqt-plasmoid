@@ -22,6 +22,7 @@ function init()
 {
     btManager.deviceAdded.connect(updateStatus);
     btManager.deviceChanged.connect(updateStatus);
+    btManager.bluetoothOperationalChanged.connect(updateStatus);
 
     updateStatus();
 }
