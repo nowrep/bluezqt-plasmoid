@@ -35,7 +35,6 @@ QHash<int, QByteArray> DevicesProxyModel::roleNames() const
     QHash<int, QByteArray> roles = QSortFilterProxyModel::roleNames();
     roles[SectionRole] = QByteArrayLiteral("Section");
     roles[DeviceFullNameRole] = QByteArrayLiteral("DeviceFullName");
-    roles[AdapterFullNameRole] = QByteArrayLiteral("AdapterFullName");
     return roles;
 }
 
@@ -50,7 +49,7 @@ QVariant DevicesProxyModel::data(const QModelIndex &index, int role) const
 
     case DeviceFullNameRole:
         if (duplicateIndexAddress(index)) {
-            const QString name = QSortFilterProxyModel::data(index, BluezQt::DevicesModel::FriendlyNameRole).toString();
+            const QString name = QSortFilterProxyModel::data(index, BluezQt::DevicesModel::NameRole).toString();
             const QString ubi = QSortFilterProxyModel::data(index, BluezQt::DevicesModel::UbiRole).toString();
             const QString hci = adapterHciString(ubi);
 
@@ -58,17 +57,7 @@ QVariant DevicesProxyModel::data(const QModelIndex &index, int role) const
                 return QStringLiteral("%1 - %2").arg(name, hci);
             }
         }
-        return QSortFilterProxyModel::data(index, BluezQt::DevicesModel::FriendlyNameRole);
-
-    case AdapterFullNameRole: {
-        BluezQt::AdapterPtr adapter = devicesModel()->device(index)->adapter();
-        const QString hci = adapterHciString(adapter->ubi());
-
-        if (!hci.isEmpty()) {
-            return QStringLiteral("%1 (%2)").arg(adapter->name(), hci);
-        }
-        // fallthrough
-    }
+        return QSortFilterProxyModel::data(index, BluezQt::DevicesModel::NameRole);
 
     default:
         return QSortFilterProxyModel::data(index, role);
@@ -78,10 +67,10 @@ QVariant DevicesProxyModel::data(const QModelIndex &index, int role) const
 bool DevicesProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     bool leftConnected = left.data(BluezQt::DevicesModel::ConnectedRole).toBool();
-    const QString leftName = left.data(BluezQt::DevicesModel::FriendlyNameRole).toString();
+    const QString leftName = left.data(BluezQt::DevicesModel::NameRole).toString();
 
     bool rightConnected = right.data(BluezQt::DevicesModel::ConnectedRole).toBool();
-    const QString rightName = right.data(BluezQt::DevicesModel::FriendlyNameRole).toString();
+    const QString rightName = right.data(BluezQt::DevicesModel::NameRole).toString();
 
     if (leftConnected < rightConnected) {
         return true;
@@ -90,22 +79,6 @@ bool DevicesProxyModel::lessThan(const QModelIndex &left, const QModelIndex &rig
     }
 
     return QString::localeAwareCompare(leftName, rightName) > 0;
-}
-
-BluezQt::DevicesModel *DevicesProxyModel::devicesModel() const
-{
-    Q_ASSERT(qobject_cast<BluezQt::DevicesModel*>(sourceModel()));
-    return static_cast<BluezQt::DevicesModel*>(sourceModel());
-}
-
-bool DevicesProxyModel::duplicateIndexAddress(const QModelIndex &idx) const
-{
-    const QModelIndexList list = match(index(0, 0),
-                                       BluezQt::DevicesModel::AddressRole,
-                                       idx.data(BluezQt::DevicesModel::AddressRole).toString(),
-                                       2,
-                                       Qt::MatchExactly);
-    return list.size() > 1;
 }
 
 // Returns "hciX" part from UBI "/org/bluez/hciX/dev_xx_xx_xx_xx_xx_xx"
@@ -123,5 +96,15 @@ QString DevicesProxyModel::adapterHciString(const QString &ubi) const
         return ubi.mid(startIndex);
     }
     return ubi.mid(startIndex, endIndex - startIndex);
+}
+
+bool DevicesProxyModel::duplicateIndexAddress(const QModelIndex &idx) const
+{
+    const QModelIndexList list = match(index(0, 0),
+                                       BluezQt::DevicesModel::AddressRole,
+                                       idx.data(BluezQt::DevicesModel::AddressRole).toString(),
+                                       2,
+                                       Qt::MatchExactly);
+    return list.size() > 1;
 }
 

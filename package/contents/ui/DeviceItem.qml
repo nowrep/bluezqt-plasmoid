@@ -151,7 +151,7 @@ PlasmaComponents.ListItem {
                     runningActions--;
 
                     if (call.error) {
-                        var title = Name + " (" + Address + ")";
+                        var title = "%1 (%2)".arg(Name).arg(Address);
                         notify.connectionFailed(title, call);
                     }
                 });
@@ -210,7 +210,7 @@ PlasmaComponents.ListItem {
                     visible: Uuids.indexOf(BluezQt.Services.ObexFileTransfer) != -1
 
                     onClicked: {
-                        var url = "obexftp://" + Address.replace(/:/g, "-");
+                        var url = "obexftp://%1".arg(Address.replace(/:/g, "-"));
                         appLauncher.runUrl(url, "inode/directory");
                     }
                 }
@@ -283,7 +283,7 @@ PlasmaComponents.ListItem {
                             font.pointSize: theme.smallestFont.pointSize
                             horizontalAlignment: Text.AlignRight
                             opacity: 0.6
-                            text: "<b>" + currentDeviceDetails[index*2] + "</b>: &nbsp"
+                            text: "<b>%1</b>: &nbsp".arg(currentDeviceDetails[index * 2])
 
                             Component.onCompleted: {
                                 if (paintedWidth > repeater.longestString) {
@@ -344,6 +344,15 @@ PlasmaComponents.ListItem {
         return i18n("No");
     }
 
+    function adapterName(a)
+    {
+        var hci = devicesModel.adapterHciString(a.ubi);
+        if (hci != "") {
+            return "%1 (%2)".arg(a.name).arg(hci);
+        }
+        return a.name;
+    }
+
     function createContent() {
         if (visibleDetails) {
             var details = [];
@@ -363,7 +372,7 @@ PlasmaComponents.ListItem {
             details.push(boolToString(Trusted));
 
             details.push(i18n("Adapter"));
-            details.push(AdapterFullName);
+            details.push(adapterName(Adapter));
 
             currentDeviceDetails = details;
             expandableComponentLoader.sourceComponent = detailsComponent;

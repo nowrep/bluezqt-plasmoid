@@ -32,7 +32,6 @@ public:
     enum AdditionalRoles {
         SectionRole = BluezQt::DevicesModel::LastRole + 10,
         DeviceFullNameRole = BluezQt::DevicesModel::LastRole + 11,
-        AdapterFullNameRole = BluezQt::DevicesModel::LastRole + 12
     };
 
     DevicesProxyModel(QObject *parent = 0);
@@ -41,10 +40,10 @@ public:
     QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const Q_DECL_OVERRIDE;
 
+    Q_INVOKABLE QString adapterHciString(const QString &ubi) const;
+
 private:
-    BluezQt::DevicesModel *devicesModel() const;
     bool duplicateIndexAddress(const QModelIndex &idx) const;
-    QString adapterHciString(const QString &ubi) const;
 };
 
 #endif // DEVICESPROXYMODEL_H

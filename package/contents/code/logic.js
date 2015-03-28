@@ -51,7 +51,7 @@ function updateStatus()
         text = i18ncp("Number of connected devices", "%1 connected device", "%1 connected devices", connectedDevices.length);
         for (var i = 0; i < connectedDevices.length; ++i) {
             var device = connectedDevices[i];
-            text += "\n " + bullet + " " + device.friendlyName + " (" + device.address + ")";
+            text += "\n %1 %2 (%3)".arg(bullet).arg(device.name).arg(device.address);
         }
     } else {
         text = i18n("No connected devices");
